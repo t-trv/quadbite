@@ -1,0 +1,23 @@
+@import "./styles/fonts.css";
+@import "tailwindcss";
+@import "./styles/variables.css";
+@import "./styles/scrollbars.css";
+@import "./styles/animations.css";
+
+body {
+  font-family: "Lexend", sans-serif;
+  background: #f5f5f5;
+}
+
+/* Ẩn scrollbar trên mọi trình duyệt */
+html,
+body {
+  overflow: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE, Edge cũ */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}

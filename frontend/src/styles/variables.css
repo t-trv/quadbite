@@ -1,0 +1,17 @@
+@theme {
+  --color-primary: #e3001b;
+  --color-secondary: #101010;
+  --color-cream: #eedbbf;
+  --color-scarlet: #ab3130;
+  --color-deep-red: #67191f;
+  --color-midnight: #121212;
+  --color-skin: #fee9de;
+
+  /* Màu nền */
+  --color-bg-600: #06141b; /* Màu tối nhất */
+  --color-bg-500: #11212d;
+  --color-bg-400: #253745;
+  --color-bg-300: #4a5c6a;
+  --color-bg-200: #9baba8;
+  --color-bg-100: #ccd0cf; /* Màu sáng nhất */
+}
