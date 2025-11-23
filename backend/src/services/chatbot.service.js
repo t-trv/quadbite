@@ -37,6 +37,7 @@ export const chatWithChatbot = async (req) => {
       (food) =>
         `
       Tên món: ${food.name}
+      Slug: ${food.slug}
       Giá: ${food.price} VNĐ
       Mô tả ngắn: ${food.short_description}
       Thời gian chuẩn bị: ${food.preparation_time} phút
