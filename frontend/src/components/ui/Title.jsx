@@ -1,15 +1,24 @@
-const Title = ({ title, variant, size = "medium" }) => {
+const Title = ({ title, variant, size = "medium", weight = "semibold" }) => {
   const sizeClasses = {
-    small: "text-base",
-    medium: "text-lg",
-    large: "text-2xl",
+    small: "text-sm",
+    medium: "text-base",
+    large: "text-lg",
+    extraLarge: "text-xl",
+    extraExtraLarge: "text-2xl",
+  };
+
+  const weightClasses = {
+    light: "font-light",
+    normal: "font-normal",
+    semibold: "font-semibold",
+    bold: "font-bold",
   };
 
   return (
     <h2
-      className={`font-semibold select-none
+      className={`select-none
         ${sizeClasses[size]}
-
+        ${weightClasses[weight]}
         ${variant === "primary" && "text-primary"}
         ${variant === "secondary" && "text-secondary"}
         ${variant === "tertiary" && "text-tertiary"}

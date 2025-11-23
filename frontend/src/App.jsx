@@ -2,13 +2,10 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import PublicRoutes from "./routes/publicRoutes";
 import PrivateRoutes from "./routes/PrivateRoutes";
 import AdminRoutes from "./routes/AdminRoutes";
+import StaffRoutes from "./routes/StaffRoutes";
 
 const App = () => {
-  const routes = createBrowserRouter([
-    ...PublicRoutes,
-    ...PrivateRoutes,
-    ...AdminRoutes,
-  ]);
+  const routes = createBrowserRouter([...PublicRoutes, ...PrivateRoutes, ...AdminRoutes, ...StaffRoutes]);
 
   return <RouterProvider router={routes} />;
 };

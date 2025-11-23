@@ -11,7 +11,8 @@ apiRequest.interceptors.response.use(
   (error) => {
     if (error.response.status === 401) {
       toast.error("Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại.");
-
+      localStorage.removeItem("quadbiteUserInfo");
+      localStorage.removeItem("quadbiteCheckout");
       window.location.href = "/login";
     }
     return Promise.reject(error);

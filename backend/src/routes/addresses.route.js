@@ -13,12 +13,12 @@ const router = express.Router();
  *     summary: Get all addresses
  *     tags: [Addresses]
  *     parameters:
- *       - name: id
+ *       - name: userId
  *         in: query
  *         required: false
  *         description: The id of the user
  *         schema:
- *           type: string
+ *           type: number
  *     responses:
  *       "200":
  *         description: Addresses found successfully
@@ -46,9 +46,13 @@ router.get("/", verifyToken, asyncHandler(getAddresses));
  *                 type: number
  *                 description: The id of the user
  *                 example: 1
- *               name:
+ *               addressName:
  *                 type: string
  *                 description: The name of the address
+ *                 example: Home
+ *               receiptionName:
+ *                 type: string
+ *                 description: The name of the receiption
  *                 example: John Doe
  *               phone:
  *                 type: string

@@ -14,6 +14,7 @@ import categoriesRoute from "./routes/categories.route.js";
 import foodsRoute from "./routes/foods.route.js";
 import addressesRoute from "./routes/addresses.route.js";
 import ordersRoute from "./routes/orders.route.js";
+import chatbotRoute from "./routes/chatbot.route.js";
 
 // Middlewares
 import errorHandler from "./middlewares/errorHandler.js";
@@ -42,6 +43,7 @@ server.use("/api/categories", categoriesRoute);
 server.use("/api/foods", foodsRoute);
 server.use("/api/addresses", addressesRoute);
 server.use("/api/orders", ordersRoute);
+server.use("/api/chatbot", chatbotRoute);
 
 // Error handler
 server.use(errorHandler);

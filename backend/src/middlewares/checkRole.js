@@ -1,11 +1,16 @@
-import AppError from "../libs/AppError.js";
+import AppError from "../libs/appError.js";
 
-const checkRole = (role) => (req, res, next) => {
-  const roles = req.token_userRoles || [];
+const checkRole = (requiredRoles) => (req, res, next) => {
+  const userRoles = req.token_userRoles || [];
 
-  if (!roles.includes(role)) {
+  const allowed = Array.isArray(requiredRoles)
+    ? requiredRoles.some((r) => userRoles.includes(r))
+    : userRoles.includes(requiredRoles);
+
+  if (!allowed) {
     throw new AppError("Bạn không có quyền thực hiện hành động này", 403);
   }
+
   next();
 };
 

@@ -14,14 +14,20 @@ import Button from "../../components/ui/Button";
 import Title from "../../components/ui/Title";
 
 const FoodDetailPage = () => {
+  // helper functions
   const navigate = useNavigate();
   const { foodSlug } = useParams();
-  const [foodQuantity, setFoodQuantity] = useState(1);
-
-  const [selectedVariant, setSelectedVariant] = useState("small");
-
   const { addOderItem } = useCheckoutStore();
 
+  // states
+  const [foodQuantity, setFoodQuantity] = useState(1);
+  const [selectedVariant, setSelectedVariant] = useState({
+    id: "small",
+    name: "Nhỏ",
+    price_adjust: 0,
+  });
+
+  // Call API món ăn chi tiết
   const {
     data: foodData,
     isLoading,
@@ -35,6 +41,7 @@ const FoodDetailPage = () => {
     },
   });
 
+  // Render loading
   if (isLoading)
     return (
       <div className="relative min-h-screen">
@@ -87,7 +94,7 @@ const FoodDetailPage = () => {
               <div>
                 <span className="text-sm font-semibold text-gray-500">KÍCH CỠ</span>
                 <VariantList
-                  variantIds={foodData.variant_ids}
+                  variants={foodData.variants}
                   selectedVariant={selectedVariant}
                   setSelectedVariant={setSelectedVariant}
                 />
@@ -127,12 +134,12 @@ const FoodDetailPage = () => {
                         name: foodData.name,
                         shortDescription: foodData.short_description,
                         preparationTime: foodData.preparation_time,
-                        variantId: selectedVariant,
+                        variant: selectedVariant,
                       });
                     }}
                     className="w-full bg-secondary text-white px-4 py-2 rounded-full flex items-center justify-around cursor-pointer hover:scale-105 transition-all duration-300 active:scale-95"
                   >
-                    <span>{formatCurrency(foodData.price * 1)}</span>
+                    <span>{formatCurrency(Number(foodData.price) + Number(selectedVariant.price_adjust))}</span>
                     <span className="border-l h-4 border-white"></span>
                     <span className="text-white">Thêm vào giỏ hàng</span>
                   </button>

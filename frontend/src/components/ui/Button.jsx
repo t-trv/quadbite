@@ -5,11 +5,13 @@ const Button = ({
   type = "button",
   variant = "primary",
   size = "medium",
-  width,
+  width = "fit-content",
   minWidth,
   maxWidth,
   minHeight,
   maxHeight,
+  disabled,
+  ...props
 }) => {
   const sizeClasses = {
     small: "px-2 py-1 text-xs md:text-sm",
@@ -21,15 +23,20 @@ const Button = ({
     secondary: "bg-secondary text-white rounded-3xl border border-secondary",
     outline: "bg-white text-secondary border border-secondary rounded-3xl",
     ghost: "bg-transparent text-secondary rounded-3xl",
+    save: "bg-secondary text-white rounded-lg border border-secondary",
     "update-btn": "border border-secondary text-secondary rounded-lg",
     "delete-btn": "bg-primary text-white rounded-lg",
   };
   return (
     <button
+      {...props}
       onClick={onClick}
       type={type}
+      disabled={disabled}
       className={`
-        cursor-pointer hover:opacity-80 transition-all duration-300 flex active:scale-95 items-center gap-1 whitespace-nowrap justify-center
+        transition-all duration-300 flex items-center gap-1 whitespace-nowrap justify-center
+        ${disabled ? "opacity-50 cursor-not-allowed" : "opacity-100 cursor-pointer hover:opacity-80 active:scale-95 "}
+
         ${sizeClasses[size]}
         ${typeClasses[variant]}
       `}

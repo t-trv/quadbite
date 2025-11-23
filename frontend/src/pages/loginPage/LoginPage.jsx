@@ -7,12 +7,15 @@ import { facebookIcon } from "../../assets/socials";
 import apiRequest from "../../utils/apiRequest";
 import toast from "react-hot-toast";
 import useUserInfoStore from "../../hooks/useUserInfoStore";
+import { useEffect, useState } from "react";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const setUserInfo = useUserInfoStore((state) => state.setUserInfo);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   const handleSubmit = async (e) => {
+    setIsLoggingIn(true);
     e.preventDefault();
 
     const formData = new FormData(e.target);
@@ -33,8 +36,14 @@ const LoginPage = () => {
       }
     } catch (error) {
       toast.error(error.response.data.message);
+    } finally {
+      setIsLoggingIn(false);
     }
   };
+
+  useEffect(() => {
+    setUserInfo(null);
+  }, []);
 
   return (
     <div className="h-screen bg-white">
@@ -86,8 +95,9 @@ const LoginPage = () => {
                   className="bg-[#162D3A] text-white px-4 py-4 rounded-xl w-full 
                   cursor-pointer hover:scale-105 transition-all duration-300 active:scale-95 select-none"
                   type="submit"
+                  disabled={isLoggingIn}
                 >
-                  <span tabIndex={3}>Đăng nhập</span>
+                  {isLoggingIn ? <span>Đang đăng nhập...</span> : <span tabIndex={3}>Đăng nhập</span>}
                 </button>
               </form>
 

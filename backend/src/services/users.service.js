@@ -123,17 +123,33 @@ export const updateUser = async (req, tx = prisma) => {
 
   const { avatar_url, name, email, phone } = req.body;
 
-  const existingUser = await tx.users.findFirst({
-    where: {
-      id: id,
-    },
-  });
-  if (!existingUser) {
-    throw new AppError("Người dùng không tồn tại", 404);
+  if (email) {
+    const existingEmail = await tx.users.findFirst({
+      where: {
+        email,
+      },
+    });
+    if (existingEmail) throw new AppError("Email đã tồn tại", 400);
+  }
+
+  if (phone) {
+    const existingPhone = await tx.users.findFirst({
+      where: {
+        phone,
+      },
+    });
+    if (existingPhone) throw new AppError("Số điện thoại đã tồn tại", 400);
   }
 
   const user = await tx.users.update({
     where: { id },
+    include: {
+      user_roles: {
+        include: {
+          roles: true,
+        },
+      },
+    },
     data: {
       ...(avatar_url && { avatar_url }),
       ...(name && { name }),
@@ -143,9 +159,15 @@ export const updateUser = async (req, tx = prisma) => {
     },
   });
 
-  const { hash_password, ...userWithoutPassword } = user;
-
-  return userWithoutPassword;
+  return {
+    id: user.id,
+    username: user.username,
+    name: user.name,
+    avatar_url: user.avatar_url,
+    email: user.email,
+    phone: user.phone,
+    roles: user.user_roles.map((role) => role.roles.id),
+  };
 };
 
 export const deleteUser = async (req, tx = prisma) => {

@@ -2,7 +2,7 @@ import AdminLayout from "../layouts/AdminLayout";
 import AdminPage from "../pages/adminPage/AdminPage";
 import AdminFoodPage from "../pages/adminPage/AdminFoodPage";
 import AdminCategoryPage from "../pages/adminPage/adminCategory/AdminCategoryPage";
-import AdminRoute from "../components/AdminRoute";
+import AdminRoute from "./security/AdminRoute";
 
 const AdminRoutes = [
   {

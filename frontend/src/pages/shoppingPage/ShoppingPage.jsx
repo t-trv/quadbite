@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import apiRequest from "../../utils/apiRequest";
 import FoodMenu from "./FoodMenu";
 import Loading from "../../components/ui/Loading";
+import Chatbot from "../../components/Chatbot";
 
 const ShoppingPage = () => {
   const { mainCategory } = useParams(); // Lấy tham số từ URL
@@ -50,41 +51,44 @@ const ShoppingPage = () => {
   if (isLoading || isLoadingFoods) return <Loading />;
 
   return (
-    <div className="bg-white p-4 rounded-3xl">
-      <Title title="Menu món ăn" variant="secondary" />
+    <>
+      <div className="bg-white p-4 rounded-3xl">
+        <Title title="Menu món ăn" variant="secondary" />
 
-      {/* Side Categories */}
-      {sideCategories?.length > 0 && (
-        <div className="flex gap-1 py-2 overflow-x-auto">
-          {sideCategories?.map((item) => (
-            <div
-              key={item.id}
-              onClick={() => {
-                if (selectedSideCategory === item.id) {
-                  setSelectedSideCategory(null);
-                  return;
-                }
-                setSelectedSideCategory(item.id);
-              }}
-              className={`text-xs px-3 py-1 rounded-full select-none transition-all duration-300 cursor-pointer
+        {/* Side Categories */}
+        {sideCategories?.length > 0 && (
+          <div className="flex gap-1 py-2 overflow-x-auto">
+            {sideCategories?.map((item) => (
+              <div
+                key={item.id}
+                onClick={() => {
+                  if (selectedSideCategory === item.id) {
+                    setSelectedSideCategory(null);
+                    return;
+                  }
+                  setSelectedSideCategory(item.id);
+                }}
+                className={`text-xs px-3 py-1 rounded-full select-none transition-all duration-300 cursor-pointer
           ${
             selectedSideCategory === item.id
               ? "bg-secondary text-white border border-secondary"
               : "text-secondary border border-secondary"
           }
           `}
-            >
-              {item.name}
-            </div>
-          ))}
-        </div>
-      )}
+              >
+                {item.name}
+              </div>
+            ))}
+          </div>
+        )}
 
-      {/* Foods */}
-      <div className="pt-2">
-        <FoodMenu foods={filteredFoods} />
+        {/* Foods */}
+        <div className="pt-2">
+          <FoodMenu foods={filteredFoods} />
+        </div>
       </div>
-    </div>
+      <Chatbot />
+    </>
   );
 };
 

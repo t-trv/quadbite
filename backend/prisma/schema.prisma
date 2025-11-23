@@ -9,17 +9,19 @@ datasource db {
 }
 
 model addresses {
-  id           Int       @id @default(autoincrement())
-  user_id      Int
-  name         String    @db.VarChar(30)
-  phone        String    @db.VarChar(30)
-  address_line String    @db.VarChar(255)
-  city         String    @db.VarChar(30)
-  district     String    @db.VarChar(30)
-  created_at   DateTime? @default(dbgenerated("(now())")) @db.DateTime(0)
-  updated_at   DateTime? @default(dbgenerated("(now())")) @db.Timestamp(0)
-  deleted_at   DateTime? @db.DateTime(0)
-  users        users     @relation(fields: [user_id], references: [id], onDelete: Cascade, map: "addresses_ibfk_1")
+  id              Int       @id @default(autoincrement())
+  user_id         Int
+  address_name    String    @db.VarChar(30)
+  receiption_name String    @db.VarChar(30)
+  phone           String    @db.VarChar(30)
+  address_line    String    @db.VarChar(255)
+  city            String    @db.VarChar(30)
+  district        String    @db.VarChar(30)
+  created_at      DateTime? @default(dbgenerated("(now())")) @db.DateTime(0)
+  updated_at      DateTime? @default(dbgenerated("(now())")) @db.Timestamp(0)
+  deleted_at      DateTime? @db.DateTime(0)
+  users           users     @relation(fields: [user_id], references: [id], onDelete: Cascade, map: "addresses_ibfk_1")
+  orders          orders[]
 
   @@index([user_id], map: "addresses_ibfk_1")
 }
@@ -79,25 +81,29 @@ model order_statuses {
 }
 
 model orders {
-  id               Int              @id @default(autoincrement())
-  user_id          Int
-  total_amount     Decimal          @db.Decimal(10, 2)
-  order_status     String           @db.VarChar(30)
-  payment_status   String           @db.VarChar(30)
-  delivery_address String           @db.VarChar(255)
-  phone            String           @db.VarChar(15)
-  note             String?          @db.VarChar(255)
-  created_at       DateTime?        @db.DateTime(0)
-  updated_at       DateTime?        @db.DateTime(0)
-  deleted_at       DateTime?        @db.DateTime(0)
-  order_items      order_items[]
-  users            users            @relation(fields: [user_id], references: [id], onDelete: Cascade, map: "orders_ibfk_1")
-  order_statuses   order_statuses   @relation(fields: [order_status], references: [id], onDelete: Cascade, map: "orders_ibfk_2")
-  payment_statuses payment_statuses @relation(fields: [payment_status], references: [id], onDelete: Cascade, map: "orders_ibfk_3")
+  id                  Int              @id @default(autoincrement())
+  user_id             Int
+  total_price         Decimal          @db.Decimal(10, 2)
+  order_status_id     String           @db.VarChar(30)
+  payment_status_id   String           @db.VarChar(30)
+  payment_method_id   String           @db.VarChar(30)
+  delivery_address_id Int
+  note                String?          @db.VarChar(255)
+  created_at          DateTime?        @db.DateTime(0)
+  updated_at          DateTime?        @db.DateTime(0)
+  deleted_at          DateTime?        @db.DateTime(0)
+  order_items         order_items[]
+  users               users            @relation(fields: [user_id], references: [id], onDelete: Cascade, map: "orders_ibfk_1")
+  order_statuses      order_statuses   @relation(fields: [order_status_id], references: [id], onDelete: Cascade, map: "orders_ibfk_2")
+  payment_statuses    payment_statuses @relation(fields: [payment_status_id], references: [id], onDelete: Cascade, map: "orders_ibfk_3")
+  addresses           addresses        @relation(fields: [delivery_address_id], references: [id], onUpdate: Restrict, map: "orders_ibfk_4")
+  payment_method      payment_method   @relation(fields: [payment_method_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "orders_ibfk_5")
 
-  @@index([payment_status], map: "payment_status")
-  @@index([order_status], map: "status")
+  @@index([payment_status_id], map: "payment_status")
+  @@index([order_status_id], map: "status")
   @@index([user_id], map: "user_id")
+  @@index([delivery_address_id], map: "orders_ibfk_4")
+  @@index([payment_method_id], map: "orders_ibfk_5_idx")
 }
 
 model payment_statuses {
@@ -170,4 +176,10 @@ model food_variants {
   @@unique([food_id, variant_id], map: "food_variant_food_id_variant_id_key")
   @@index([food_id], map: "food_id")
   @@index([variant_id], map: "food_variant_ibfk_2")
+}
+
+model payment_method {
+  id     String   @id @db.VarChar(30)
+  name   String   @db.VarChar(45)
+  orders orders[]
 }

@@ -25,10 +25,16 @@ export const getFoodBySlug = async (req, tx = prisma) => {
     },
     include: {
       side_categories: true,
-      food_variants: true,
+      food_variants: {
+        include: {
+          variants: true,
+        },
+      },
     },
   });
-  return foodSerializer(food);
+  return {
+    ...foodSerializer(food),
+  };
 };
 
 export const getFoods = async (req, tx = prisma) => {
@@ -42,7 +48,11 @@ export const getFoods = async (req, tx = prisma) => {
     where: filter,
     include: {
       side_categories: true,
-      food_variants: true,
+      food_variants: {
+        include: {
+          variants: true,
+        },
+      },
     },
   });
 
