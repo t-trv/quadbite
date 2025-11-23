@@ -6,11 +6,14 @@ import { facebookIcon } from "../../assets/socials";
 
 import apiRequest from "../../utils/apiRequest";
 import toast from "react-hot-toast";
+import { useState } from "react";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
+  const [isRegistering, setIsRegistering] = useState(false);
 
   const handleSubmit = async (e) => {
+    setIsRegistering(true);
     e.preventDefault();
 
     const formData = new FormData(e.target);
@@ -33,6 +36,8 @@ const RegisterPage = () => {
       }
     } catch (error) {
       toast.error(error.response.data.message);
+    } finally {
+      setIsRegistering(false);
     }
   };
 
@@ -102,8 +107,9 @@ const RegisterPage = () => {
                   className="bg-[#162D3A] text-white px-4 py-4 rounded-xl w-full cursor-pointer hover:scale-105 transition-all duration-300 active:scale-95 select-none"
                   type="submit"
                   tabIndex={4}
+                  disabled={isRegistering}
                 >
-                  <span>Đăng ký</span>
+                  {isRegistering ? <span>Đang đăng ký...</span> : <span>Đăng ký</span>}
                 </button>
               </form>
 

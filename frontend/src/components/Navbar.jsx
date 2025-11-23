@@ -30,7 +30,7 @@ const Navbar = () => {
             <li
               key={item.name}
               onClick={() => navigate(item.path)}
-              className="hover:text-primary transition-all duration-300 cursor-pointer text-base"
+              className="hover:text-primary transition-all duration-300 cursor-pointer text-sm font-semibold"
             >
               {item.name}
             </li>
@@ -43,12 +43,23 @@ const Navbar = () => {
           <p className="text-secondary text-xs md:text-sm font-semibold">{userInfo.name || userInfo.username}</p>
           <p className="text-gray-500 text-xs">{userInfo.email || "Chưa có email"}</p>
         </div>
-        <div onClick={() => navigate("/profile")} className="cursor-pointer">
+        <div onClick={() => navigate("/user/account/profile")} className="cursor-pointer">
           <img src={userInfo.avatar_url} className="w-9 h-9 rounded-full border border-secondary" alt="" />
         </div>
         <Button variant="primary" size="medium" icon={<Handbag className="w-4 h-4" />}>
           Giỏ hàng
         </Button>
+
+        {isAdmin && (
+          <Button
+            onClick={() => navigate("/staff/orders")}
+            variant="secondary"
+            size="medium"
+            icon={<UserStar className="w-4 h-4" />}
+          >
+            Nhân viên
+          </Button>
+        )}
 
         {isAdmin && (
           <Button

@@ -16,9 +16,9 @@ export const getAddresses = async (req, tx = prisma) => {
 };
 
 export const createAddress = async (req, tx = prisma) => {
-  const { userId, name, phone, addressLine, city, district } = req.body;
+  const { userId, phone, addressLine, city, district, addressName, receiptionName } = req.body;
 
-  if (!userId || !name || !phone || !addressLine || !city || !district)
+  if (!userId || !phone || !addressLine || !city || !district || !addressName || !receiptionName)
     throw new AppError("Vui lòng điền đầy đủ thông tin địa chỉ", 400);
 
   const existingUser = await tx.users.findFirst({
@@ -40,7 +40,8 @@ export const createAddress = async (req, tx = prisma) => {
   const newAddress = await tx.addresses.create({
     data: {
       user_id: userId,
-      name: name,
+      address_name: addressName,
+      receiption_name: receiptionName,
       phone: phone,
       address_line: addressLine,
       city,
@@ -53,7 +54,7 @@ export const createAddress = async (req, tx = prisma) => {
 
 export const updateAddress = async (req, tx = prisma) => {
   const id = parseInt(req.params.id);
-  const { addressLine, city, district } = req.body;
+  const { addressLine, city, district, addressName, receiptionName } = req.body;
 
   const existingAddress = await tx.addresses.findFirst({
     where: {
@@ -69,6 +70,8 @@ export const updateAddress = async (req, tx = prisma) => {
       address_line: addressLine ?? existingAddress.address_line,
       city: city ?? existingAddress.city,
       district: district ?? existingAddress.district,
+      address_name: addressName ?? existingAddress.address_name,
+      receiption_name: receiptionName ?? existingAddress.receiption_name,
       updated_at: new Date(),
     },
   });

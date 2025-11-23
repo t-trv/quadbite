@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import useUserInfoStore from "../hooks/useUserInfoStore.js";
+import useUserInfoStore from "../../hooks/useUserInfoStore.js";
 
 const AdminRoute = ({ children }) => {
   const navigate = useNavigate();

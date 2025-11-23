@@ -1,13 +1,17 @@
 import ShoppingLayout from "../layouts/ShoppingLayout";
-import ProfilePage from "../pages/profilePage/ProfilePage";
-import ProfileLayout from "../layouts/ProfileLayout";
+import UserLayout from "../layouts/UserLayout";
 import OrderLayout from "../layouts/OrderLayout";
 
+import ProtectedRoute from "./security/ProtectedRoute";
+
 import ShoppingPage from "../pages/shoppingPage/ShoppingPage";
-import ProtectedRoute from "../components/ProtectedRoute";
 import FoodDetailPage from "../pages/foodDetailPage/FoodDetailPage";
 import OrderPage from "../pages/orderPage/OrderPage";
-import CheckoutPage from "../pages/checkoutPage/CheckoutPage";
+import QrCheckoutPage from "../pages/checkoutPage/QrCheckoutPage";
+import OrderSuccessPage from "../pages/orderPage/OrderSuccessPage";
+import Profile from "../pages/userPage/account/Profile";
+import Password from "../pages/userPage/account/Password";
+import Orders from "../pages/userPage/orders/Orders";
 
 const PrivateRoutes = [
   // Shopping
@@ -34,19 +38,26 @@ const PrivateRoutes = [
     ),
     children: [
       { path: "/order", element: <OrderPage /> },
-      { path: "/order/checkout", element: <CheckoutPage /> },
+      { path: "/order/success/:orderId", element: <OrderSuccessPage /> },
+      { path: "/order/checkout/qr", element: <QrCheckoutPage /> },
     ],
   },
 
-  // Profile
+  // User
   {
-    path: "/",
+    path: "/user",
     element: (
       <ProtectedRoute>
-        <ProfileLayout />
+        <UserLayout />
       </ProtectedRoute>
     ),
-    children: [{ path: "/profile", element: <ProfilePage /> }],
+    children: [
+      { path: "/user/account/profile", element: <Profile />, default: true },
+      { path: "/user/account/password", element: <Password /> },
+
+      // Orders
+      { path: "/user/orders", element: <Orders /> },
+    ],
   },
 ];
 

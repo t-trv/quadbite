@@ -1,23 +1,21 @@
-import convertVariantName from "../../utils/convertVariantName";
-
-const VariantList = ({ variantIds, selectedVariant, setSelectedVariant }) => {
+const VariantList = ({ variants, selectedVariant, setSelectedVariant }) => {
   return (
     <div className="flex items-center gap-2">
-      {variantIds?.map((variantId) => (
+      {variants?.map((variant) => (
         <div
-          key={variantId}
+          key={variant.id}
           className={`rounded-xl px-5 py-1 min-w-10 text-center text-sm border-2 border-dashed border-gray-400 transition-all duration-300 cursor-pointer select-none ${
-            selectedVariant === variantId ? "bg-secondary text-white border-secondary" : ""
+            selectedVariant.id === variant.id ? "bg-secondary text-white border-secondary" : ""
           }`}
           onClick={() => {
-            if (selectedVariant === variantId) {
+            if (selectedVariant.id === variant.id) {
               setSelectedVariant(null);
             } else {
-              setSelectedVariant(variantId);
+              setSelectedVariant(variant);
             }
           }}
         >
-          <span className="">{convertVariantName(variantId)}</span>
+          <span className="">{variant.name}</span>
         </div>
       ))}
     </div>

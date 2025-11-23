@@ -88,7 +88,7 @@ const AdminFoodPage = () => {
                   discount: item.discount,
                   description: item.description,
                   shortDescription: item.short_description,
-                  variantIds: item.variant_ids,
+                  variantIds: item.variants.map((variant) => variant.id),
                 })
               }
             >
@@ -392,8 +392,6 @@ const AdminFoodPage = () => {
   // Render
   if ((isLoading, isLoadingSideCategories)) return <div>Loading...</div>;
   if (isError) return <div>Error: {isError.message}</div>;
-
-  console.log(foods);
 
   return (
     <div className="bg-white p-4 rounded-3xl h-full">

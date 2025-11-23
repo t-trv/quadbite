@@ -16,7 +16,13 @@ const foodSerializer = (item) => ({
     id: item.side_categories.id,
     name: item.side_categories.name,
   },
-  variant_ids: item.food_variants.map((variant) => variant.variant_id),
+  variants: item?.food_variants?.map((variant) => {
+    return {
+      id: variant.variants.id,
+      name: variant.variants.name,
+      price_adjust: variant.variants.price_adjust,
+    };
+  }),
 });
 
 export default foodSerializer;

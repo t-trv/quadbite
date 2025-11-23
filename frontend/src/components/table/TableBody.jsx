@@ -1,10 +1,10 @@
 const TableBody = ({ data, columns }) => {
   return (
     <tbody className="divide-y divide-gray-300">
-      {data.map((item) => (
-        <tr key={item.id} className="hover:bg-gray-50">
+      {data.map((item, index) => (
+        <tr key={index} className="hover:bg-gray-50">
           {columns.map((column) => (
-            <td key={column.key} className="p-4">
+            <td key={index + column.key} className="p-4">
               {column.render ? column.render(item) : item[column.key]}
             </td>
           ))}
