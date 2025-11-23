@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import PublicRoutes from "./routes/publicRoutes";
+import PublicRoutes from "./routes/PublicRoutes";
 import PrivateRoutes from "./routes/PrivateRoutes";
 import AdminRoutes from "./routes/AdminRoutes";
 import StaffRoutes from "./routes/StaffRoutes";
